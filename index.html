@@ -10,23 +10,34 @@
   <body>
     <div class="container">
       <main>
-        <img src="./img/undraw_mathematics_-4-otb.svg" alt="" />
+        <div class="img-container">
+          <img
+            class="pi-man"
+            src="./img/undraw_mathematics_-4-otb.svg"
+            alt=""
+          />
+        </div>
         <form action="" class="form-container">
           <div class="form-selection">
-            <label for="new-user-radio">Yeni Kullanıcı</label>
-            <input
-              type="radio"
-              name="is-new"
-              id="new-user-radio"
-              value="newUser"
-            />
-            <label for="already-user-radio">Hesabım Var</label>
-            <input
-              type="radio"
-              name="is-new"
-              id="already-user-radio"
-              value="login"
-            />
+            <div class="choice">
+              <input
+                type="radio"
+                name="is-new"
+                id="already-user-radio"
+                value="login"
+                checked="checked"
+              />
+              <label for="already-user-radio">Hesabım Var</label>
+            </div>
+            <div class="choice">
+              <input
+                type="radio"
+                name="is-new"
+                id="new-user-radio"
+                value="newUser"
+              />
+              <label for="new-user-radio">Yeni Kullanıcı</label>
+            </div>
           </div>
           <div class="input-div">
             <input type="text" class="text-input" placeholder="Mail adresi" />
@@ -34,14 +45,14 @@
           <div class="input-div">
             <input type="text" class="text-input" placeholder="Şifre" />
           </div>
-          <div class="input-div">
+          <div class="input-div password-repeat-div is-hiding">
             <input
               type="text"
               class="text-input password-repeat"
               placeholder="Şifrenizi tekrarlayın"
             />
           </div>
-          <div class="signin-buttons">
+          <div class="signin-buttons is-hiding">
             <button type="submit" class="signin-btn">Kayıt Ol</button>
           </div>
           <div class="login-buttons">
