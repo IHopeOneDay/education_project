@@ -1,3 +1,4 @@
+const { MongoClient } = require("mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -5,6 +6,22 @@ const app = express();
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const client = new MongoClient(
+  "mongodb://root:root@localhost:27011/?authMechanism=DEFAULT&authSource=admin"
+);
+
+client
+  .connect()
+  .catch((err) => {
+    console.error(err.stack);
+    process.exit(1);
+  })
+  .then(() => {
+    app.listen(3000, () => {
+      console.log("Listening");
+    });
+  });
 
 app.get("/", (req, res) => {
   res.send(`<!DOCTYPE html>
@@ -114,11 +131,27 @@ app.get("/", (req, res) => {
   `);
 });
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("We are working on it");
-});
-
-app.listen(3000, () => {
-  console.log("Listening");
+app.post("/", async (req, res) => {
+  const { isNew, email, password, passConf } = req.body;
+  if (isNew === "newUser") {
+    if (isNew === "newUser" && password !== passConf) {
+      res.send("Password and password confirmation must match");
+      return;
+    }
+    client.db("users").collection("students").insertOne({ email, password });
+    res.send("You signed in succesfully");
+    return;
+  } else if (isNew === "login") {
+    const user = await client
+      .db("users")
+      .collection("students")
+      .findOne({ email });
+    if (user) {
+      if (user.password !== password) {
+        res.send("Wrong password or email");
+        return;
+      }
+      res.send("You logged in succesfully");
+    }
+  }
 });
