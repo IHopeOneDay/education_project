@@ -1,6 +1,17 @@
 const layout = require("./layout");
+const { getErrors } = require("./helpers");
 
-module.exports = () => {
+module.exports = ({ errors }, isNew = "login") => {
+  const emailErrors = getErrors(errors, "email");
+  const passwordErrors = getErrors(errors, "password");
+  const passConfErrors = getErrors(errors, "passConf");
+
+  const errorParagraph = (error) => {
+    if (error) {
+      return '<p class="' + 'error-message">' + error + "</p>";
+    }
+  };
+
   return layout({
     content: `<div class="container">
   <main>
@@ -19,7 +30,7 @@ module.exports = () => {
             name="isNew"
             id="already-user-radio"
             value="login"
-            checked="checked"
+            ${isNew === "login" ? `checked="checked"` : ""};
           />
           <label for="already-user-radio">Hesabım Var</label>
         </div>
@@ -29,15 +40,18 @@ module.exports = () => {
             name="isNew"
             id="new-user-radio"
             value="newUser"
+            ${isNew === "newUser" ? `checked="checked"` : ""};
           />
           <label for="new-user-radio">Yeni Kullanıcı</label>
         </div>
       </div>
       <div class="input-div">
         <input required type="email" name="email"class="text-input" placeholder="Mail adresi" />
+        ${emailErrors ? errorParagraph(emailErrors) : ""}
       </div>
       <div class="input-div">
         <input required type="password" name="password" class="text-input" placeholder="Şifre" />
+        ${passwordErrors ? errorParagraph(passwordErrors) : ""}
       </div>
       <div class="input-div password-repeat-div is-hiding">
         <input
@@ -46,6 +60,7 @@ module.exports = () => {
           class="text-input password-repeat"
           placeholder="Şifrenizi tekrarlayın"
         />
+        ${passConfErrors ? errorParagraph(passConfErrors) : ""}
       </div>
       <div class="signin-buttons is-hiding">
         <button type="submit" class="signin-btn">Kayıt Ol</button>
@@ -82,17 +97,33 @@ module.exports = () => {
   const signin_button = document.querySelector(".signin-buttons");
   const login_buttons = document.querySelector(".login-buttons");
   const password_repeat = document.querySelector(".password-repeat-div");
-
+  const errorMessages= document.querySelectorAll(".error-message");
+  console.log(errorMessages);
   radio_1.addEventListener("click", () => {
     login_buttons.classList.remove("is-hiding");
     signin_button.classList.add("is-hiding");
     password_repeat.classList.add("is-hiding");
+    errorMessages.forEach(error=>error.style.display="none")
   });
   radio_2.addEventListener("click", () => {
     login_buttons.classList.add("is-hiding");
     signin_button.classList.remove("is-hiding");
     password_repeat.classList.remove("is-hiding");
+    errorMessages.forEach(error=>error.style.display="none")
   });
+  window.addEventListener("load", () => {
+    if (radio_1.checked) {
+      login_buttons.classList.remove("is-hiding");
+      signin_button.classList.add("is-hiding");
+      password_repeat.classList.add("is-hiding");
+    }
+    if (radio_2.checked) {
+      login_buttons.classList.add("is-hiding");
+      signin_button.classList.remove("is-hiding");
+      password_repeat.classList.remove("is-hiding");
+    }
+  });
+  
 </script>`,
     styles: ["style.css"],
   });

@@ -1,9 +1,10 @@
 const express = require("express");
 const questionLibTemplate = require("../views/questionLib");
+const { requireAuth } = require("./middlewares");
 
 const router = express();
 
-router.get("/dersler", (req, res) => {
+router.get("/dersler", requireAuth, (req, res) => {
   res.send(questionLibTemplate());
 });
 

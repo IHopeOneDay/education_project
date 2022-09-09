@@ -1,54 +1,58 @@
 const express = require("express");
 const argon2 = require("argon2");
+const { validationResult } = require("express-validator");
 const signinTemplate = require("../views/signin");
 const mongoUtils = require("../mongoUtils");
+const {
+  requireEmail,
+  requirePassword,
+  requirePasswordConfirmation,
+  requireValidPasswordForUser,
+} = require("./validator");
 
 const router = express.Router();
 const usersDb = mongoUtils.getUsersDb();
 
 router.get("/", (req, res) => {
-  res.send(signinTemplate());
+  res.send(signinTemplate({}));
 });
 
-router.post("/", async (req, res) => {
-  const { isNew, email, password, passConf } = req.body;
-  if (isNew === "newUser") {
-    if (isNew === "newUser" && password !== passConf) {
-      res.send("Password and password confirmation must match");
-      return;
-    }
-    const hashedPassword = await argon2.hash(password, {
-      type: argon2.argon2id,
-    });
-    usersDb
-      .collection("students")
-      .insertOne({ email, password: hashedPassword });
-    res.send("You signed in succesfully");
-    return;
-  } else if (isNew === "login") {
-    const user = await usersDb.collection("students").findOne({ email });
-    if (!user) {
-      res.send("Wrong email or password");
-      return;
-    }
-    if (user) {
-      if (await argon2.verify(user.password, password)) {
-        req.session.userId = user._id.toString();
-        res.send("You logged in succesfully");
-        return;
+router.post(
+  "/",
+  [
+    requireEmail,
+    requirePassword,
+    requirePasswordConfirmation,
+    requireValidPasswordForUser,
+  ],
+  async (req, res) => {
+    const { isNew, email, password } = req.body;
+    const errors = validationResult(req);
+    if (isNew === "newUser") {
+      if (!errors.isEmpty()) {
+        return res.send(signinTemplate({ errors }, "newUser"));
       }
-      res.send("Wrong password or email");
+      const hashedPassword = await argon2.hash(password, {
+        type: argon2.argon2id,
+      });
+      await usersDb
+        .collection("students")
+        .insertOne({ email, password: hashedPassword });
+      res.send("Başarılı bir şekilde kayıt oldunuz.");
       return;
+    } else if (isNew === "login") {
+      if (!errors.isEmpty()) {
+        return res.send(signinTemplate({ errors }));
+      }
+      res.redirect("/dersler");
     }
+    return;
   }
+);
 
-  res.send("There is something wrong");
-  return;
-});
-
-router.get("/signout", (req, res) => {
+router.get("/logout", (req, res) => {
   req.session = null;
-  res.send("You are logged out");
+  res.redirect("/");
 });
 
 module.exports = router;

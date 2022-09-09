@@ -3,14 +3,14 @@ const argon2 = require("argon2");
 const mongoUtils = require("../mongoUtils");
 
 const usersDb = mongoUtils.getUsersDb();
-
+let user;
 module.exports = {
-  requireEmail: check(email)
+  requireEmail: check("email")
     .isEmail()
     .normalizeEmail()
     .withMessage("Lütfen geçerli bir mail adresi giriniz.")
     .custom(async (email, { req }) => {
-      const user = await usersDb.collection("students").findOne({ email });
+      user = await usersDb.collection("students").findOne({ email });
       if (req.body.isNew === "newUser") {
         if (user) {
           throw new Error("Bu email ile kayıt olmuş başka bir hesap var.");
@@ -26,21 +26,19 @@ module.exports = {
   requirePassword: check("password")
     .trim()
     .custom((password, { req }) => {
-      if (
-        req.body.isNew === "newUser" &&
-        password.length < 6 &&
-        password.length > 24
-      ) {
-        throw new Error(
-          "Parola uzunluğu 6 ile 24 karakter arasında olmalıdır."
-        );
+      if (req.body.isNew === "newUser") {
+        if (password.length < 6 || password.length > 24) {
+          throw new Error(
+            "Parola uzunluğu 6 ile 24 karakter arasında olmalıdır."
+          );
+        }
       }
       return true;
     }),
   requirePasswordConfirmation: check("passConf")
     .trim()
     .custom((passconf, { req }) => {
-      if ((req.body.isNew = "newUser")) {
+      if (req.body.isNew === "newUser") {
         if (passconf.length < 6 && passconf.length > 24) {
           throw new Error("Parola tekrarı 6 ile 24 karakter arasında olmalı.");
         }
@@ -54,15 +52,12 @@ module.exports = {
     .trim()
     .custom(async (password, { req }) => {
       if (req.body.isNew === "login") {
-        const user = await usersDb
-          .collection("students")
-          .findOne({ email: req.body.email });
-        if (!user) {
-          throw new Error("Hatalı email veya parola");
-        }
-        const validPassword = await argon2.verify(user.password, password);
-        if (!validPassword) {
-          throw new Error("Hatalı email veya parola");
+        if (user) {
+          const validPassword = await argon2.verify(user.password, password);
+          if (!validPassword) {
+            throw new Error("Hatalı mail adresi veya parola");
+          }
+          req.session.userId = user._id.toString();
         }
       }
       return true;

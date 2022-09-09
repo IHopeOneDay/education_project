@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./lecture-displayer.css" />
+    <title>Eğitim</title>
+  </head>
+  <body>
+    <div class="lectures-container">
+      <div class="lecture">
+        <div class="lecture-header">
+          <div class="lecture-name">Matematik</div>
+          <div
+            class="lecture-progress-bar"
+            data-label="Loading"
+            style="--width: 10"
+          ></div>
+          <div class="lecture-arrow">
+            <ion-icon name="caret-back-circle-outline"></ion-icon>
+          </div>
+        </div>
+        <div class="lecture-contents">
+          <ul class="lecture-list">
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+            <li class="lecture-list-item">
+              <div class="parag">Matematik</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      const lectureArrow = document.querySelector(".lecture-arrow");
+      const lectureContents = document.querySelectorAll(
+        ".lecture-list-item .parag"
+      );
+      lectureArrow.addEventListener("click", () => {
+        lectureContents.forEach((lecture) => {
+          lecture.classList.toggle("is-shrinking");
+        });
+      });
+    </script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+  </body>
+</html>

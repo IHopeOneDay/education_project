@@ -15,7 +15,7 @@ module.exports = () => {
           <a class="navigation-link" href="">Profil</a>
         </li>
         <li class="navigation">
-          <a class="navigation-link" href="">Çıkış</a>
+          <a href="/logout"class="navigation-link" href="">Çıkış</a>
         </li>
       </ul>
     </nav>

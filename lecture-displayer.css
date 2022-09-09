@@ -1,0 +1,86 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+.lectures-container {
+  width: 120rem;
+  margin: auto;
+}
+
+.lecture {
+  margin-top: 3rem;
+  background-color: rgb(250, 189, 97);
+}
+
+.lecture-header {
+  margin: auto;
+  width: 90%;
+  font-size: 3.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6rem;
+  padding: 1rem 0;
+}
+
+.lecture-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lecture-progress-bar {
+  flex-grow: 1;
+  position: relative;
+  height: 3.6rem;
+  border-radius: 3rem;
+  background-color: black;
+  color: white;
+}
+
+.lecture-progress-bar::before {
+  content: attr(data-label);
+  font-size: 2rem;
+  left: 0.5rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: calc(var(--width, 0) * 1%);
+  min-width: 2rem;
+  max-width: calc(100% - 1rem);
+  border-radius: 3rem;
+  background-color: aqua;
+  padding: 1rem;
+}
+
+.lecture-contents {
+  width: 90%;
+  margin: auto;
+}
+
+.lecture-list {
+  list-style: none;
+}
+
+.lecture-list-item {
+  margin-bottom: 1rem;
+}
+.parag {
+  max-height: 10rem;
+  transition: max-height 0.5s;
+}
+
+.lecture-list-item .is-shrinking {
+  max-height: 0;
+  overflow: hidden;
+}
