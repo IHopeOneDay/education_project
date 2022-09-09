@@ -1,13 +1,16 @@
 const { MongoClient } = require("mongodb");
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieSession = require("cookie-session");
 
 const mongoUtils = require("./mongoUtils");
+const { cookieKey } = require("./keys");
 
 const app = express();
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieSession({ keys: [cookieKey] }));
 /*const client = new MongoClient(
   "mongodb://root:root@localhost:27011/?authMechanism=DEFAULT&authSource=admin"
 );
@@ -31,7 +34,9 @@ mongoUtils.connectToServer(function (err, client) {
     process.exit(1);
   }
   const authRouter = require("./routes/auth");
+  const questionLibRouter = require("./routes/questionLibrary");
   app.use(authRouter);
+  app.use(questionLibRouter);
   app.listen(3000, () => {
     console.log("Listening");
   });

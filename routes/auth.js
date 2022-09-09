@@ -33,12 +33,22 @@ router.post("/", async (req, res) => {
     }
     if (user) {
       if (await argon2.verify(user.password, password)) {
+        req.session.userId = user._id.toString();
         res.send("You logged in succesfully");
         return;
       }
       res.send("Wrong password or email");
+      return;
     }
   }
+
+  res.send("There is something wrong");
+  return;
+});
+
+router.get("/signout", (req, res) => {
+  req.session = null;
+  res.send("You are logged out");
 });
 
 module.exports = router;

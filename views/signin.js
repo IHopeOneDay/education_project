@@ -94,5 +94,6 @@ module.exports = () => {
     password_repeat.classList.remove("is-hiding");
   });
 </script>`,
+    styles: ["style.css"],
   });
 };
