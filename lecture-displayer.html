@@ -47,9 +47,7 @@
     </div>
     <script>
       const lectureArrow = document.querySelector(".lecture-arrow");
-      const lectureContents = document.querySelectorAll(
-        ".lecture-list-item .parag"
-      );
+      const lectureContents = document.querySelectorAll(".lecture-contents");
       lectureArrow.addEventListener("click", () => {
         lectureContents.forEach((lecture) => {
           lecture.classList.toggle("is-shrinking");

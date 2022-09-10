@@ -66,6 +66,9 @@ html {
 .lecture-contents {
   width: 90%;
   margin: auto;
+  transition: 0.5s linear;
+  overflow: hidden;
+  max-height: 0;
 }
 
 .lecture-list {
@@ -75,12 +78,7 @@ html {
 .lecture-list-item {
   margin-bottom: 1rem;
 }
-.parag {
-  max-height: 10rem;
-  transition: max-height 0.5s;
-}
 
-.lecture-list-item .is-shrinking {
-  max-height: 0;
-  overflow: hidden;
+.lecture-contents.is-shrinking {
+  max-height: 20rem;
 }
