@@ -10,7 +10,7 @@ module.exports = {
       { useNewUrlParser: true },
       function (err, client) {
         usersDb = client.db("users");
-        mathDb = client.db("questions");
+        questionsDb = client.db("questions");
         return cb(err);
       }
     );
@@ -18,5 +18,26 @@ module.exports = {
   getUsersDb: () => {
     return usersDb;
   },
-  returnDefaultTestValues: () => {},
+  getQuestionsDb: () => {
+    return questionsDb;
+  },
+  returnDefaultTestValues: async () => {
+    const userTestStats = [];
+    const mathTests = await usersDb
+      .collection("math")
+      .find()
+      .project({ test_id: 1, _id: 0 });
+    mathTests.forEach((test) => {
+      console.log(test);
+      const testStats = {};
+      Object.assign(testStats, test, {
+        t: 0,
+        f: 0,
+        b: 0,
+        isTouched: false,
+      });
+      userTestStats.push(testStats);
+    });
+    return userTestStats;
+  },
 };

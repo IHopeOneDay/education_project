@@ -35,9 +35,10 @@ router.post(
       const hashedPassword = await argon2.hash(password, {
         type: argon2.argon2id,
       });
+      const mathStats = await mongoUtils.returnDefaultTestValues();
       await usersDb
         .collection("students")
-        .insertOne({ email, password: hashedPassword });
+        .insertOne({ email, password: hashedPassword, math: mathStats });
       res.send("Başarılı bir şekilde kayıt oldunuz.");
       return;
     } else if (isNew === "login") {
