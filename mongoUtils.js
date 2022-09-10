@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 
 let usersDb;
+let questionsDb;
 
 module.exports = {
   connectToServer: (cb) => {
@@ -9,6 +10,7 @@ module.exports = {
       { useNewUrlParser: true },
       function (err, client) {
         usersDb = client.db("users");
+        mathDb = client.db("questions");
         return cb(err);
       }
     );
@@ -16,4 +18,5 @@ module.exports = {
   getUsersDb: () => {
     return usersDb;
   },
+  returnDefaultTestValues: () => {},
 };

@@ -10,6 +10,11 @@ html {
   font-size: 62.5%;
 }
 
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #fafafa;
+}
+
 .lectures-container {
   width: 120rem;
   margin: auto;
@@ -17,7 +22,10 @@ html {
 
 .lecture {
   margin-top: 3rem;
-  background-color: rgb(250, 189, 97);
+  background-color: #ecebff;
+  border-radius: 2rem;
+  padding: 2rem 0;
+  color: #343a40;
 }
 
 .lecture-header {
@@ -35,6 +43,11 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: transform 0.5s;
+}
+
+.rotated-arrow {
+  transform: rotate(-90deg);
 }
 
 .lecture-progress-bar {
@@ -66,9 +79,12 @@ html {
 .lecture-contents {
   width: 90%;
   margin: auto;
-  transition: 0.5s linear;
+  height: 0;
+  transition: height 0.5s;
   overflow: hidden;
-  max-height: 0;
+  /*transition: 0.5s linear;
+  overflow: hidden;
+  max-height: 0;*/
 }
 
 .lecture-list {
@@ -76,9 +92,39 @@ html {
 }
 
 .lecture-list-item {
-  margin-bottom: 1rem;
+  margin-top: 2rem;
+  background-color: #9c96ff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
 }
 
-.lecture-contents.is-shrinking {
-  max-height: 20rem;
+/*.lecture-contents.is-shrinking {
+  max-height: 30rem;
+}*/
+
+.lecture-topic {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lecture-topic-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.correct,
+.false,
+.blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
 }
