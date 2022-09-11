@@ -60,7 +60,7 @@ module.exports = () => {
       </div>
     </div>
   </div>`,
-    styles: ["questionLib.css"],
+    styles: ["/css/questionLib.css"],
     font: `<link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

@@ -125,6 +125,6 @@ module.exports = ({ errors }, isNew = "login") => {
   });
   
 </script>`,
-    styles: ["style.css"],
+    styles: ["/css/style.css"],
   });
 };

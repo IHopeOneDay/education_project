@@ -15,7 +15,7 @@ module.exports = (tests) => {
     }
     return `<li class="lecture-list-item" style="background-color:${color}">
     <div class="lecture-topic">
-      <div class="lecture-topic-name"><a class="lecture-link"href="/dersler">${testName}</a></div>
+      <div class="lecture-topic-name"><a class="lecture-link"href="/math/${test.math.test_id}">${testName}</a></div>
       <div class="lecture-topic-stats">
         <div class="correct">
           <div class="stat-first-letter">D:</div>
@@ -41,7 +41,7 @@ module.exports = (tests) => {
     href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap"
     rel="stylesheet"
   />`,
-    styles: ["lecture-displayer.css"],
+    styles: ["/css/lecture-displayer.css"],
     content: `<div class="lectures-container">
     <div class="lecture">
       <div class="lecture-header">
