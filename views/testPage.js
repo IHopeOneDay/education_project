@@ -1,10 +1,93 @@
 const layout = require("./layout");
 
-module.exports = () => {
+module.exports = (test) => {
+  const { name, questions } = test;
+  const answersContainer = () => {
+    const answersCont = questions.map((question, index) => {
+      return `<div class="answer-container">
+      <div class="answers-question-number">${index + 1}</div>
+      <input
+        class="student-answer-radio"
+        type="radio"
+        name="${index + 1}"
+        id="a-${index + 1}"
+      />
+      <label for="a-${index + 1}">A</label>
+      <input
+        class="student-answer-radio"
+        type="radio"
+        name="${index + 1}"
+        id="b-${index + 1}"
+      />
+      <label for="b-${index + 1}">B</label>
+      <input
+        class="student-answer-radio"
+        type="radio"
+        name="${index + 1}"
+        id="c-${index + 1}"
+      />
+      <label for="c-${index + 1}">C</label>
+      <input
+        class="student-answer-radio"
+        type="radio"
+        name="${index + 1}"
+        id="d-${index + 1}"
+      />
+      <label for="d-${index + 1}">D</label>
+    </div>`;
+    });
+
+    const firstQuestion = questions[0];
+    const firstQuestionTemplate = `<div class="question">${firstQuestion.question}</div>
+    <div class="choices">
+      <div class="choice">
+        <input
+          type="radio"
+          class="single-question-radio"
+          name="choice"
+          id="a"
+        /><label class="single-question-radio-label choice-a" for="a"
+          >${firstQuestion.choices.a}</label
+        >
+      </div>
+      <div class="choice">
+        <input
+          type="radio"
+          class="single-question-radio"
+          name="choice"
+          id="b"
+        />
+        <label class="single-question-radio-label choice-b" for="b"
+          >${firstQuestion.choices.b}</label
+        >
+      </div>
+      <div class="choice">
+        <input
+          type="radio"
+          class="single-question-radio"
+          name="choice"
+          id="c"
+        /><label class="single-question-radio-label choice-c" for="c"
+          >${firstQuestion.choices.c}</label
+        >
+      </div>
+      <div class="choice">
+        <input
+          type="radio"
+          class="single-question-radio"
+          name="choice"
+          id="d"
+        /><label class="single-question-radio-label choice-d" for="d"
+          >${firstQuestion.choices.d}</label
+        >
+      </div>
+    </div>`;
+    return { answersCont: answersCont.join(""), firstQuestionTemplate };
+  };
   return layout({
     content: `<div class="container">
     <div class="flex-center">
-      <h1>Trigonometri 1</h1>
+      <h1>${name}</h1>
     </div>
     <div class="question-answer-container">
       <div class="question-container">
@@ -24,120 +107,25 @@ module.exports = () => {
             </div>
           </div>
         </div>
-        <div class="question">sin(30) kaçtır?</div>
-        <div class="choices">
-          <div class="choice">
-            <input
-              type="radio"
-              class="single-question-radio"
-              name="choice"
-              id="a"
-            /><label class="single-question-radio-label choice-a" for="a"
-              >A</label
-            >
-          </div>
-          <div class="choice">
-            <input
-              type="radio"
-              class="single-question-radio"
-              name="choice"
-              id="b"
-            />
-            <label class="single-question-radio-label choice-b" for="b"
-              >B</label
-            >
-          </div>
-          <div class="choice">
-            <input
-              type="radio"
-              class="single-question-radio"
-              name="choice"
-              id="c"
-            /><label class="single-question-radio-label choice-c" for="c"
-              >C</label
-            >
-          </div>
-          <div class="choice">
-            <input
-              type="radio"
-              class="single-question-radio"
-              name="choice"
-              id="d"
-            /><label class="single-question-radio-label choice-d" for="d"
-              >D</label
-            >
-          </div>
-        </div>
+        ${answersContainer().firstQuestionTemplate} 
       </div>
       <div class="answers-container">
         <form action="" method="post">
-          <div class="answer-container">
-            <div class="answers-question-number">1</div>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="1"
-              id="a-1"
-            />
-            <label for="a-1">A</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="1"
-              id="b-1"
-            />
-            <label for="b-1">B</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="1"
-              id="c-1"
-            />
-            <label for="c-1">C</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="1"
-              id="d-1"
-            />
-            <label for="d-1">D</label>
-          </div>
-          <div class="answer-container">
-            <div class="answers-question-number">2</div>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="2"
-              id="a-2"
-            />
-            <label for="a-2">A</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="2"
-              id="b-2"
-            />
-            <label for="b-2">B</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="2"
-              id="c-2"
-            />
-            <label for="c-2">C</label>
-            <input
-              class="student-answer-radio"
-              type="radio"
-              name="2"
-              id="d-2"
-            />
-            <label for="d-2">D</label>
-          </div>
+          ${answersContainer().answersCont}
           <button class="submit-answers" type="submit">Testi bitir</button>
         </form>
       </div>
     </div>
   </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+  ></script>
   <script>
     const secondText = document.querySelector(".second");
     const minuteText = document.querySelector(".minute");
@@ -166,14 +154,8 @@ module.exports = () => {
       secondText.innerText = secondModified;
     }, 1000);
   </script>
-  <script
-    type="module"
-    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
-  ></script>
-  <script
-    nomodule
-    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-  ></script>`,
+  <script src="/js/testPageHandler.js"></script>
+  `,
     font: `<link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link

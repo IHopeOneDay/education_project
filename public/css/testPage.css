@@ -194,3 +194,7 @@ h1 {
 .submit-answers:hover {
   background-color: #5c52ff;
 }
+
+.nonclickable {
+  display: none;
+}
