@@ -1,7 +1,7 @@
 const layout = require("./layout");
 
 module.exports = (test) => {
-  const { name, questions } = test;
+  const { name, questions, test_id } = test;
   const answersContainer = () => {
     const answersCont = questions.map((question, index) => {
       return `<div class="answer-container">
@@ -11,6 +11,7 @@ module.exports = (test) => {
         type="radio"
         name="${index + 1}"
         id="a-${index + 1}"
+        value="a"
       />
       <label for="a-${index + 1}">A</label>
       <input
@@ -18,6 +19,7 @@ module.exports = (test) => {
         type="radio"
         name="${index + 1}"
         id="b-${index + 1}"
+        value="b"
       />
       <label for="b-${index + 1}">B</label>
       <input
@@ -25,6 +27,7 @@ module.exports = (test) => {
         type="radio"
         name="${index + 1}"
         id="c-${index + 1}"
+        value="c"
       />
       <label for="c-${index + 1}">C</label>
       <input
@@ -32,6 +35,7 @@ module.exports = (test) => {
         type="radio"
         name="${index + 1}"
         id="d-${index + 1}"
+        value="d"
       />
       <label for="d-${index + 1}">D</label>
     </div>`;
@@ -46,6 +50,7 @@ module.exports = (test) => {
           class="single-question-radio"
           name="choice"
           id="a"
+          value="a"
         /><label class="single-question-radio-label choice-a" for="a"
           >${firstQuestion.choices.a}</label
         >
@@ -56,6 +61,7 @@ module.exports = (test) => {
           class="single-question-radio"
           name="choice"
           id="b"
+          value="b"
         />
         <label class="single-question-radio-label choice-b" for="b"
           >${firstQuestion.choices.b}</label
@@ -67,6 +73,7 @@ module.exports = (test) => {
           class="single-question-radio"
           name="choice"
           id="c"
+          value="c"
         /><label class="single-question-radio-label choice-c" for="c"
           >${firstQuestion.choices.c}</label
         >
@@ -77,6 +84,7 @@ module.exports = (test) => {
           class="single-question-radio"
           name="choice"
           id="d"
+          value="d"
         /><label class="single-question-radio-label choice-d" for="d"
           >${firstQuestion.choices.d}</label
         >
@@ -110,7 +118,7 @@ module.exports = (test) => {
         ${answersContainer().firstQuestionTemplate} 
       </div>
       <div class="answers-container">
-        <form action="" method="post">
+        <form action="/math/${test_id}" method="post">
           ${answersContainer().answersCont}
           <button class="submit-answers" type="submit">Testi bitir</button>
         </form>
