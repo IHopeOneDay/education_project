@@ -35,7 +35,7 @@ router.get("/math", requireAuth, async (req, res) => {
 
   const tests = await userCursor.toArray();
 
-  res.send(lecturesTemplate(tests));
+  res.json(JSON.stringify(tests));
 });
 
 module.exports = router;

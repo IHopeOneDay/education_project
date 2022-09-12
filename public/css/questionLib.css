@@ -122,3 +122,125 @@ h2 {
     transform: translate(0, -5rem);
   }
 }
+
+.lectures-container {
+  width: 120rem;
+  margin: auto;
+}
+
+.lecture {
+  margin-top: 3rem;
+  background-color: #ecebff;
+  border-radius: 2rem;
+  padding: 2rem 0;
+  color: #343a40;
+}
+
+.lecture-header {
+  margin: auto;
+  width: 90%;
+  font-size: 3.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6rem;
+  padding: 1rem 0;
+}
+
+.lecture-arrow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.5s;
+}
+
+.rotated-arrow {
+  transform: rotate(-90deg);
+}
+
+.lecture-progress-bar {
+  flex-grow: 1;
+  position: relative;
+  height: 3.6rem;
+  border-radius: 3rem;
+  background-color: #212529;
+  color: white;
+}
+
+.lecture-progress-bar::before {
+  content: attr(data-label);
+  font-size: 2rem;
+  left: 0.5rem;
+  top: 0.5rem;
+  bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  width: calc(var(--width, 0) * 1%);
+  min-width: 2rem;
+  max-width: calc(100% - 3rem);
+  border-radius: 3rem;
+  background-color: #5c52ff;
+  padding: 1rem;
+}
+
+.lecture-contents {
+  width: 90%;
+  margin: auto;
+  height: 0;
+  transition: height 0.5s;
+  overflow: hidden;
+  /*transition: 0.5s linear;
+  overflow: hidden;
+  max-height: 0;*/
+}
+
+.lecture-list {
+  list-style: none;
+}
+
+.lecture-list-item {
+  margin-top: 2rem;
+  background-color: #9c96ff;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
+}
+
+/*.lecture-contents.is-shrinking {
+  max-height: 30rem;
+}*/
+
+.lecture-topic {
+  font-size: 2rem;
+  letter-spacing: 1px;
+  color: white;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lecture-topic-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.lecture-link {
+  text-decoration: none;
+}
+
+.lecture-link:link,
+.lecture-link:visited {
+  color: white;
+}
+.correct,
+.false,
+.blank {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+}

@@ -60,7 +60,6 @@ router.post("/math/:test_id", requireAuth, async (req, res) => {
     }
   });
   blankNumber = totalQuestions - trueNumber - falseNumber;
-  console.log(trueNumber, falseNumber, blankNumber);
   const user = await usersDb.collection("students").updateOne(
     {
       _id: new ObjectId(req.session.userId),
@@ -75,7 +74,7 @@ router.post("/math/:test_id", requireAuth, async (req, res) => {
     },
     { arrayFilters: [{ "elem.test_id": parseInt(req.params.test_id) }] }
   );
-  res.send("Test bitti");
+  res.redirect("/dersler");
 });
 
 module.exports = router;

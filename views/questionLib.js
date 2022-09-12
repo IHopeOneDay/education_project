@@ -1,6 +1,6 @@
 const layout = require("./layout");
 
-module.exports = () => {
+module.exports = (testsPercentage) => {
   return layout({
     content: `<header>
     <nav>
@@ -15,7 +15,7 @@ module.exports = () => {
           <a class="navigation-link" href="">Profil</a>
         </li>
         <li class="navigation">
-          <a href="/logout"class="navigation-link" href="">Çıkış</a>
+          <a href="/logout"class="navigation-link" href="/logout">Çıkış</a>
         </li>
       </ul>
     </nav>
@@ -59,7 +59,35 @@ module.exports = () => {
         </div>
       </div>
     </div>
-  </div>`,
+  </div>
+  <div class="lectures-container">
+    <div class="lecture">
+      <div class="lecture-header">
+        <div class="lecture-name">Matematik</div>
+        <div
+          class="lecture-progress-bar"
+          data-label="%${testsPercentage}"
+          style="--width: ${testsPercentage}"
+        ></div>
+        <div class="lecture-arrow">
+          <ion-icon name="caret-back-circle-outline"></ion-icon>
+        </div>
+      </div>
+      <div class="lecture-contents">
+        <ul class="lecture-list"></ul>
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="/js/lectureHandler.js"></script>
+  <script
+    type="module"
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+  ></script>
+  <script
+    nomodule
+    src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+  ></script>`,
     styles: ["/css/questionLib.css"],
     font: `<link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
