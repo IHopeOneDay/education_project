@@ -26,7 +26,7 @@ router.post(
     requireValidPasswordForUser,
   ],
   async (req, res) => {
-    const { isNew, email, password } = req.body;
+    const { isNew, email, password, accountType } = req.body;
     const errors = validationResult(req);
     if (isNew === "newUser") {
       if (!errors.isEmpty()) {
@@ -35,17 +35,36 @@ router.post(
       const hashedPassword = await argon2.hash(password, {
         type: argon2.argon2id,
       });
-      const mathStats = await mongoUtils.returnDefaultTestValues();
-      await usersDb
-        .collection("students")
-        .insertOne({ email, password: hashedPassword, math: mathStats });
+      if (accountType === "student") {
+        const mathStats = await mongoUtils.returnDefaultTestValues();
+        await usersDb.collection("students").insertOne({
+          email,
+          password: hashedPassword,
+          math: mathStats,
+          credits: 0,
+        });
+      }
+      if (accountType === "teacher") {
+        await usersDb
+          .collection("teachers")
+          .insertOne({
+            email,
+            password: hashedPassword,
+            credits: 0,
+            stars: null,
+          });
+      }
       res.send("Başarılı bir şekilde kayıt oldunuz.");
       return;
     } else if (isNew === "login") {
       if (!errors.isEmpty()) {
         return res.send(signinTemplate({ errors }));
       }
-      res.redirect("/dersler");
+      if (accountType === "student") {
+        res.redirect("/dersler");
+      } else if (accountType === "teacher") {
+        res.send("Hoşgeldiniz");
+      }
     }
     return;
   }

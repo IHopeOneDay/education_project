@@ -62,6 +62,31 @@ module.exports = ({ errors }, isNew = "login") => {
         />
         ${passConfErrors ? errorParagraph(passConfErrors) : ""}
       </div>
+      <div class="dropdown">
+            <div class="dropdown-header">
+              <div class="dropdown-text">Üyelik tipi seçiniz</div>
+              <div class="dropdown-arrow"><ion-icon name="caret-back-circle-outline"></ion-icon></div>
+            </div>
+            <div class="choices">
+              <input
+                type="radio"
+                class="account-type"
+                name="accountType"
+                id="student"
+                checked="checked"
+                value="student"
+              />
+              <label for="student" class="account-choice">Öğrenci</label>
+              <input
+                type="radio"
+                class="account-type"
+                name="accountType"
+                value="teacher"
+                id="teacher"
+              />
+              <label for="teacher" class="account-choice">Öğretmen</label>
+            </div>
+          </div>
       <div class="signin-buttons is-hiding">
         <button type="submit" class="signin-btn">Kayıt Ol</button>
       </div>
@@ -92,39 +117,9 @@ module.exports = ({ errors }, isNew = "login") => {
     </div>
   </footer>
 </div>
-<script>
-  const [radio_1, radio_2] = document.querySelectorAll("input[type=radio]");
-  const signin_button = document.querySelector(".signin-buttons");
-  const login_buttons = document.querySelector(".login-buttons");
-  const password_repeat = document.querySelector(".password-repeat-div");
-  const errorMessages= document.querySelectorAll(".error-message");
-  console.log(errorMessages);
-  radio_1.addEventListener("click", () => {
-    login_buttons.classList.remove("is-hiding");
-    signin_button.classList.add("is-hiding");
-    password_repeat.classList.add("is-hiding");
-    errorMessages.forEach(error=>error.style.display="none")
-  });
-  radio_2.addEventListener("click", () => {
-    login_buttons.classList.add("is-hiding");
-    signin_button.classList.remove("is-hiding");
-    password_repeat.classList.remove("is-hiding");
-    errorMessages.forEach(error=>error.style.display="none")
-  });
-  window.addEventListener("load", () => {
-    if (radio_1.checked) {
-      login_buttons.classList.remove("is-hiding");
-      signin_button.classList.add("is-hiding");
-      password_repeat.classList.add("is-hiding");
-    }
-    if (radio_2.checked) {
-      login_buttons.classList.add("is-hiding");
-      signin_button.classList.remove("is-hiding");
-      password_repeat.classList.remove("is-hiding");
-    }
-  });
-  
-</script>`,
+<script src="/js/signin.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>`,
     styles: ["/css/style.css"],
   });
 };

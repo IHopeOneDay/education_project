@@ -9,7 +9,7 @@ module.exports = (testsPercentage) => {
           <a class="navigation-link" href="">Özel Ders</a>
         </li>
         <li class="navigation">
-          <a class="navigation-link" href="">Soru Çözümü</a>
+          <a class="navigation-link" href="/sorucozum">Soru Çözümü</a>
         </li>
         <li class="navigation">
           <a class="navigation-link" href="">Profil</a>

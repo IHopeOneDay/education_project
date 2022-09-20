@@ -10,7 +10,11 @@ module.exports = {
     .normalizeEmail()
     .withMessage("Lütfen geçerli bir mail adresi giriniz.")
     .custom(async (email, { req }) => {
-      user = await usersDb.collection("students").findOne({ email });
+      if (req.body.accountType === "student") {
+        user = await usersDb.collection("students").findOne({ email });
+      } else if (req.body.accountType === "teacher") {
+        user = await usersDb.collection("teachers").findOne({ email });
+      }
       if (req.body.isNew === "newUser") {
         if (user) {
           throw new Error("Bu email ile kayıt olmuş başka bir hesap var.");
@@ -58,8 +62,14 @@ module.exports = {
             throw new Error("Hatalı mail adresi veya parola");
           }
           req.session.userId = user._id.toString();
+          if (req.body.accountType === "student") {
+            req.session.accountType = "student";
+          } else if (req.body.accountType === "teacher") {
+            req.session.accountType = "teacher";
+          }
         }
       }
+      user = null;
       return true;
     }),
 };

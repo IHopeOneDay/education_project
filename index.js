@@ -37,10 +37,12 @@ mongoUtils.connectToServer(function (err, client) {
   const questionLibRouter = require("./routes/questionLibrary");
   const lecturesRouter = require("./routes/lectures");
   const testPageRouter = require("./routes/testPages");
+  const questionMarketRouter = require("./routes/questionSolutionMarket");
   app.use(authRouter);
   app.use(questionLibRouter);
   app.use(lecturesRouter);
   app.use(testPageRouter);
+  app.use(questionMarketRouter);
   app.listen(3000, () => {
     console.log("Listening");
   });

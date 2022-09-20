@@ -1,12 +1,12 @@
 const express = require("express");
 const { ObjectId } = require("bson");
 const questionLibTemplate = require("../views/questionLib");
-const { requireAuth } = require("./middlewares");
+const { requireAuth, requireStudent } = require("./middlewares");
 const mongoUtils = require("../mongoUtils");
 const usersDb = mongoUtils.getUsersDb();
 const router = express();
 
-router.get("/dersler", requireAuth, async (req, res) => {
+router.get("/dersler", requireAuth, requireStudent, async (req, res) => {
   let tests = await usersDb
     .collection("students")
     .findOne(
