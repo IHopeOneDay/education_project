@@ -44,7 +44,11 @@
         <form class="question-list-container">
           <div class="question-container">
             <div class="question-image-container">
-              <input type="file" name="question-image" id="image-selection" />
+              <input
+                type="file"
+                name="question-image"
+                class="image-selection"
+              />
               <ion-icon class="add-image-button" name="camera"></ion-icon>
               <div class="image-text">Fotoğraf ekleyin</div>
               <img class="user-question-image" src="" alt="" />
@@ -52,7 +56,6 @@
             <div class="question-explanation">
               <textarea
                 name="questionExplanation"
-                id=""
                 rows="8"
                 placeholder="Soruyla ilgili ek açıklamalarınızı yazabilirsiniz."
               ></textarea>
@@ -78,12 +81,33 @@
         <div class="user-credits-container">
           <div class="user-credits-amount">50</div>
           <div class="user-credits-text">Kredi</div>
-          <a href="/krediAl">Kredi Al</a>
+          <a class="get-credits" href="/krediAl">Kredi Al</a>
         </div>
         <div class="order-summary-container">
+          <div class="teacher-information">
+            <div class="teacher-img">
+              <img src="./undraw_male_avatar_323b.svg" alt="" />
+            </div>
+            <div class="teacher-text">
+              <div class="teacher-name">Mehmet Aşkar</div>
+              <div class="price-per-question">Soru başına 3 kredi</div>
+            </div>
+          </div>
+          <div class="total-price-container">
+            <div class="question-number">1</div>
+            <div class="cross">X</div>
+            <div class="question-price">3</div>
+            <div class="equal">=</div>
+            <div class="total-price">
+              <div class="price-amount">3</div>
+              <div class="price-text">Kredi</div>
+            </div>
+          </div>
           <div class="finish-order">
-            <button type="submit">Siparişi Tamamla</button>
-            <ion-icon name="card"></ion-icon>
+            <button class="finish-order-button" type="submit">
+              Siparişi Tamamla
+            </button>
+            <ion-icon class="card-icon" name="card"></ion-icon>
           </div>
         </div>
       </div>
@@ -101,9 +125,16 @@
         ".question-image-container"
       );
       const userQuestionImage = document.querySelector(".user-question-image");
-      const imageSelection = document.querySelector("#image-selection");
+      const imageSelection = document.querySelector(".image-selection");
       const uploadImageIcon = document.querySelector(".add-image-button");
       const uploadImageText = document.querySelector(".image-text");
+      const newQuestionButton = document.querySelector(".add-new-question");
+      const numberOfQuestions = document.querySelector(".question-number");
+      const pricePerQuestion = document.querySelector(".question-price");
+      const priceAmount = document.querySelector(".price-amount");
+      const questionListContainer = document.querySelector(
+        ".question-list-container"
+      );
       const showImage = (src, target) => {
         const fr = new FileReader();
         fr.addEventListener("load", function () {
@@ -127,6 +158,46 @@
       };
       questionImageContainer.addEventListener("click", clickImageSelection);
       showImage(imageSelection, userQuestionImage);
+
+      newQuestionButton.addEventListener("click", () => {
+        numberOfQuestions.innerText = parseInt(numberOfQuestions.innerText) + 1;
+        priceAmount.innerText =
+          parseInt(pricePerQuestion.innerText) *
+          parseInt(numberOfQuestions.innerText);
+        questionListContainer.innerHTML += `<div class="question-container">
+            <div class="question-image-container">
+              <input
+                type="file"
+                name="question-image"
+                class="image-selection"
+              />
+              <ion-icon class="add-image-button" name="camera"></ion-icon>
+              <div class="image-text">Fotoğraf ekleyin</div>
+              <img class="user-question-image" src="" alt="" />
+            </div>
+            <div class="question-explanation">
+              <textarea
+                name="questionExplanation"
+                rows="8"
+                placeholder="Soruyla ilgili ek açıklamalarınızı yazabilirsiniz."
+              ></textarea>
+            </div>
+            <div class="question-action-buttons-container">
+              <div class="delete-question">
+                <ion-icon
+                  class="action-button action-button-1"
+                  name="trash"
+                ></ion-icon>
+              </div>
+              <div class="edit-question">
+                <ion-icon
+                  class="action-button action-button-2"
+                  name="camera"
+                ></ion-icon>
+              </div>
+            </div>
+          </div>`;
+      });
     </script>
   </body>
 </html>
