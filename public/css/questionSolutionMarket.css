@@ -24,6 +24,16 @@ header::after {
   clear: both;
 }
 
+.logo-container {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background-size: cover;
+  background-image: url("/img/undraw_teacher_re_sico.svg");
+  float: left;
+  margin-left: 1rem;
+}
+
 .nav-list {
   float: right;
   display: flex;

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eğitim</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="questionAsking.css" />
+  </head>
+  <body>
+    <header>
+      <a href="/dersler" class="logo-container"></a>
+      <nav>
+        <ul class="nav-list">
+          <li class="navigation">
+            <a class="navigation-link" href="">Özel Ders</a>
+          </li>
+          <li class="navigation">
+            <a href="/sorucozum" class="navigation-link" href="">Soru Çözümü</a>
+          </li>
+          <li class="navigation">
+            <a class="navigation-link" href="/dersler">Profil</a>
+          </li>
+          <li class="navigation">
+            <a class="navigation-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="left-body">
+        <div class="upper-container">
+          <div class="upper-text">Sorulacak Sorular</div>
+          <div class="add-new-question">
+            <ion-icon name="add-circle"></ion-icon>
+          </div>
+        </div>
+        <form class="question-list-container">
+          <div class="question-container">
+            <div class="question-image-container">
+              <input type="file" name="question-image" id="image-selection" />
+              <ion-icon class="add-image-button" name="camera"></ion-icon>
+              <div class="image-text">Fotoğraf ekleyin</div>
+              <img class="user-question-image" src="" alt="" />
+            </div>
+            <div class="question-explanation">
+              <textarea
+                name="questionExplanation"
+                id=""
+                rows="8"
+                placeholder="Soruyla ilgili ek açıklamalarınızı yazabilirsiniz."
+              ></textarea>
+            </div>
+            <div class="question-action-buttons-container">
+              <div class="delete-question">
+                <ion-icon
+                  class="action-button action-button-1"
+                  name="trash"
+                ></ion-icon>
+              </div>
+              <div class="edit-question">
+                <ion-icon
+                  class="action-button action-button-2"
+                  name="camera"
+                ></ion-icon>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="right-body">
+        <div class="user-credits-container">
+          <div class="user-credits-amount">50</div>
+          <div class="user-credits-text">Kredi</div>
+          <a href="/krediAl">Kredi Al</a>
+        </div>
+        <div class="order-summary-container">
+          <div class="finish-order">
+            <button type="submit">Siparişi Tamamla</button>
+            <ion-icon name="card"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script>
+      const questionImageContainer = document.querySelector(
+        ".question-image-container"
+      );
+      const userQuestionImage = document.querySelector(".user-question-image");
+      const imageSelection = document.querySelector("#image-selection");
+      const uploadImageIcon = document.querySelector(".add-image-button");
+      const uploadImageText = document.querySelector(".image-text");
+      const showImage = (src, target) => {
+        const fr = new FileReader();
+        fr.addEventListener("load", function () {
+          target.src = this.result;
+        });
+        src.addEventListener("change", () => {
+          fr.readAsDataURL(src.files[0]);
+          target.classList.add("is-visible-img");
+          uploadImageIcon.classList.add("not-visible-buttons");
+          uploadImageText.classList.add("not-visible-buttons");
+          questionImageContainer.removeEventListener(
+            "click",
+            clickImageSelection
+          );
+          questionImageContainer.style.cursor = "default";
+        });
+      };
+
+      const clickImageSelection = () => {
+        imageSelection.click();
+      };
+      questionImageContainer.addEventListener("click", clickImageSelection);
+      showImage(imageSelection, userQuestionImage);
+    </script>
+  </body>
+</html>

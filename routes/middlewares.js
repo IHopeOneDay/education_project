@@ -11,4 +11,10 @@ module.exports = {
     }
     next();
   },
+  requireTeacher(req, res, next) {
+    if (req.session.accountType !== "teacher") {
+      return res.redirect("/");
+    }
+    next();
+  },
 };

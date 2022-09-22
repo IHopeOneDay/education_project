@@ -45,14 +45,13 @@ router.post(
         });
       }
       if (accountType === "teacher") {
-        await usersDb
-          .collection("teachers")
-          .insertOne({
-            email,
-            password: hashedPassword,
-            credits: 0,
-            stars: null,
-          });
+        await usersDb.collection("teachers").insertOne({
+          email,
+          password: hashedPassword,
+          credits: 0,
+          stars: null,
+          isProfileSet: false,
+        });
       }
       res.send("Başarılı bir şekilde kayıt oldunuz.");
       return;
@@ -63,7 +62,7 @@ router.post(
       if (accountType === "student") {
         res.redirect("/dersler");
       } else if (accountType === "teacher") {
-        res.send("Hoşgeldiniz");
+        res.redirect("/ogretmen");
       }
     }
     return;

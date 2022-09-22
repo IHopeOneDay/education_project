@@ -2,6 +2,7 @@ const layout = require("./layout");
 
 module.exports = ({ credits = 0, teachers = [] }) => {
   teachers = teachers.map((teacher) => {
+    console.log(teacher);
     let stars;
     if (teacher.stars === null) {
       stars = 0;
@@ -33,7 +34,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
     return `<div class="teacher-container">
     <div class="teacher-information">
       <div class="teacher-avatar">
-        <img src="./img/brad-pitt.webp" alt="" />
+        <img src="/${teacher.imgPath}" alt="" />
       </div>
       <div class="teacher-information-text">
         <div class="teacher-name">${teacher.name}</div>
@@ -47,7 +48,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
       <div class="question-price">Soru başına ${
         teacher.creditsPerQuestion
       } kredi</div>
-      <a href="" class="ask-question-button">
+      <a href="/sorucozum/${teacher._id}" class="ask-question-button">
         Soru Sor
       </a>
     </div>
@@ -65,6 +66,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
     />`,
     styles: ["/css/questionSolutionMarket.css"],
     content: `<header>
+    <a href="/dersler" class="logo-container"></a>
     <nav>
       <ul class="nav-list">
         <li class="navigation">

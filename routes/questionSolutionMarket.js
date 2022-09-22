@@ -18,8 +18,8 @@ router.get("/sorucozum", requireAuth, requireStudent, async (req, res) => {
       ),
     usersDb
       .collection("teachers")
-      .find({})
-      .project({ name: 1, stars: 1, creditsPerQuestion: 1, _id: 0 })
+      .find({ isProfileSet: true })
+      .project({ name: 1, stars: 1, creditsPerQuestion: 1, imgPath: 1, _id: 1 })
       .toArray(),
   ]).then((values) => {
     res.send(
@@ -29,6 +29,10 @@ router.get("/sorucozum", requireAuth, requireStudent, async (req, res) => {
       })
     );
   });
+});
+
+router.get("/sorucozum/:teacherId", (req, res) => {
+  res.send(req.params.teacherId);
 });
 
 module.exports = router;
