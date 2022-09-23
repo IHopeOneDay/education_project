@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
     );
   },
 });
-const updload = multer({ storage: storage });
+const upload = multer({ storage: storage });
 
 router.get("/ogretmen", requireTeacher, async (req, res) => {
   const teacher = await usersDb.findOne({
@@ -43,7 +43,7 @@ router.get("/ogretmen/profile", async (req, res) => {
 router.post(
   "/ogretmen/setProfile",
   requireTeacher,
-  updload.single("avatar"),
+  upload.single("avatar"),
   async (req, res) => {
     await usersDb.updateOne(
       { _id: new ObjectId(req.session.userId) },

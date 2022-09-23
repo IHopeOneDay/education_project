@@ -2,7 +2,6 @@ const layout = require("./layout");
 
 module.exports = ({ credits = 0, teachers = [] }) => {
   teachers = teachers.map((teacher) => {
-    console.log(teacher);
     let stars;
     if (teacher.stars === null) {
       stars = 0;

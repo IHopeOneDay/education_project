@@ -11,6 +11,7 @@ const app = express();
 app.use(express.static("public"));
 app.use(express.static("teacher_photographs"));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(cookieSession({ keys: [cookieKey] }));
 /*const client = new MongoClient(
   "mongodb://root:root@localhost:27011/?authMechanism=DEFAULT&authSource=admin"
