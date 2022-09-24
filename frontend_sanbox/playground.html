@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <a href="/dersler" class="logo-container"></a>
+      <nav>
+        <ul class="nav-list">
+          <li class="navigation">
+            <a class="navigation-link" href="">Özel Ders</a>
+          </li>
+          <li class="navigation">
+            <a href="/sorucozum" class="navigation-link" href="">Soru Çözümü</a>
+          </li>
+          <li class="navigation">
+            <a class="navigation-link" href="/dersler">Profil</a>
+          </li>
+          <li class="navigation">
+            <a class="navigation-link" href="/logout">Çıkış</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <div class="container">
+      <div class="left-part">
+        <div class="hero-personal">
+          <div class="questions-asked">
+            <div class="questions-asked-header">
+              <div class="questions-asked-text">Sorulan Sorular</div>
+              <div class="questions-asked-arrow">
+                <ion-icon name="caret-back-circle-outline"></ion-icon>
+              </div>
+            </div>
+            <div class="questions-asked-contents">
+              <ul class="questions-asked-list"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="hero-teachers">${teachers}</div>
+      </div>
+      <div class="right-part">
+        <div class="user-credits-container">
+          <div class="user-credits-amount">${credits}</div>
+          <div class="user-credits-text">Kredi</div>
+          <a href="" class="user-credits-buy">Kredi Al</a>
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="/js/questionSolutionMarket.js"></script>
+  </body>
+</html>

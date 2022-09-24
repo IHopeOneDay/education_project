@@ -94,18 +94,52 @@ header::after {
 
 .questions-asked {
   flex: 1;
+
+  background-color: #d0ceff;
+  border-radius: 0.6rem;
+}
+
+.questions-asked-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem 2rem;
-  background-color: #d0ceff;
-  border-radius: 0.6rem;
 }
 
 .questions-asked-arrow {
   font-size: 3.2rem;
   display: flex;
   align-items: center;
+  transition: all 0.25s;
+}
+
+.rotated-arrow {
+  transform: rotateZ(-90deg);
+}
+
+.questions-asked-contents {
+  height: 0;
+  transition: height 0.5s;
+  overflow: hidden;
+  width: 96%;
+  margin: auto;
+}
+
+.order-item {
+  border: 3px solid #6c63ff;
+  border-radius: 0.6rem;
+}
+
+.questions-list-item {
+  list-style: none;
+}
+
+.question-list-item {
+  margin-top: 2rem;
+  background-color: red;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 1px 3px 3px rgba(0, 0, 0, 0.1);
 }
 
 .user-credits-container {

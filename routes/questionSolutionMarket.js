@@ -49,6 +49,33 @@ router.get("/sorucozum", requireAuth, requireStudent, async (req, res) => {
 });
 
 router.get(
+  "/sorucozum/askedQuestions",
+  requireAuth,
+  requireStudent,
+  async (req, res) => {
+    const cursor = await usersDb
+      .collection("questionMarket")
+      .find({
+        student_id: req.session.userId,
+        isActive: true,
+      })
+      .project({ isActive: 0, _id: 0, questionPrice: 0, student_id: 0 });
+    const askedQuestions = await cursor.toArray();
+    res.json(JSON.stringify(askedQuestions));
+  }
+);
+
+router.get("/sorucozum/getTeacherInformation/:teacherId", async (req, res) => {
+  const teacher = await usersDb
+    .collection("teachers")
+    .findOne(
+      { _id: req.params.teacherId },
+      { projection: { imgPath: 1, name: 1, _id: 0 } }
+    );
+  res.json(JSON.stringify(teacher));
+});
+
+router.get(
   "/sorucozum/:teacherId",
   requireAuth,
   requireStudent,
@@ -113,10 +140,10 @@ router.get(
       {
         student_id: req.session.userId,
         teacherId: req.params.teacherId,
+        isActive: false,
       },
       {
         $setOnInsert: {
-          isActive: false,
           isFulfilled: false,
           created: Date.now(),
           questions: [],
@@ -139,10 +166,7 @@ router.post(
   "/sorucozum/:teacherId/addNewQuestion",
   requireAuth,
   requireStudent,
-  upload.any(),
   async (req, res) => {
-    console.log(req.body);
-    console.log(req.file);
     if (req.body.action === "add") {
       const questionMarketEntity = await usersDb
         .collection("questionMarket")
@@ -150,6 +174,7 @@ router.post(
           {
             student_id: req.session.userId.toString(),
             teacherId: req.params.teacherId,
+            isActive: false,
           },
           {
             $push: {
@@ -190,5 +215,57 @@ router.post("/sorucozum/:teacherId/removeQuestion", async (req, res) => {
   );
   res.json({});
 });
+
+router.post(
+  "/sorucozum/:teacherId/finishOrder",
+  upload.array("question-image"),
+  async (req, res) => {
+    const questionMarketEntity = await usersDb
+      .collection("questionMarket")
+      .findOne({
+        student_id: req.session.userId,
+        teacherId: req.params.teacherId,
+        isActive: false,
+      });
+    let totalPrice;
+    if (questionMarketEntity) {
+      totalPrice =
+        questionMarketEntity.questions.length *
+        questionMarketEntity.questionPrice;
+    }
+    const hasEnoughMoney = async () => {
+      const results = await usersDb.collection("students").findOneAndUpdate(
+        {
+          _id: new ObjectId(req.session.userId),
+          credits: { $gte: totalPrice },
+        },
+        { $inc: { credits: -totalPrice } }
+      );
+      return results;
+    };
+
+    const result = await hasEnoughMoney();
+
+    const questionsArray = [];
+    req.files.forEach((image, idx) => {
+      const imgPath = image.path.split("/");
+      questionsArray[idx] = {};
+      questionsArray[idx].imgPath = imgPath[imgPath.length - 1];
+      questionsArray[idx].explanation = req.body["question-explanation"][idx];
+    });
+    console.log(questionsArray);
+    if (result.value !== null) {
+      await usersDb.collection("questionMarket").updateOne(
+        {
+          student_id: req.session.userId,
+          teacherId: req.params.teacherId,
+          isActive: false,
+        },
+        { $set: { isActive: true, questions: questionsArray } }
+      );
+    }
+    res.redirect("/sorucozum");
+  }
+);
 
 module.exports = router;

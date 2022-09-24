@@ -34,22 +34,9 @@ const addSelfDestructingEventListener = (element, eventType, callback) => {
 };
 
 addNewQuestionButton.addEventListener("click", async () => {
-  const formData = new FormData();
-  const questionContainers = document.querySelectorAll(".question-container");
-  questionContainers.forEach((questionContainer, idx) => {
-    const textArea = questionContainer.querySelector("textarea");
-    const imageFile = questionContainer.querySelector(".image-selection");
-    formData.append(`text-${idx}`, textArea.value);
-    formData.append(`image-${idx}`, imageFile.files[0]);
-  });
-  formData.append("action", "add");
   const url = window.location.href.split("/");
   const postUrl = "/sorucozum/" + url[url.length - 1] + "/addNewQuestion";
-  const response = await axios.post(postUrl, formData, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
+  const response = await axios.post(postUrl, { action: "add" });
   createQuestionContainer(
     response.data.questionMarketEntity.value.questions.length
   );
@@ -68,7 +55,7 @@ const createQuestionContainer = (itemId) => {
   questionImageContainer.classList.add("question-image-container");
   const imageSelection = document.createElement("input");
   imageSelection.setAttribute("type", "file");
-  imageSelection.setAttribute("name", `question-image-${itemId}`);
+  imageSelection.setAttribute("name", `question-image`);
   imageSelection.classList.add("image-selection");
   const addImageButton = document.createElement("ion-icon");
   addImageButton.setAttribute("name", "camera");
@@ -88,7 +75,7 @@ const createQuestionContainer = (itemId) => {
   const questionExplanation = document.createElement("div");
   questionExplanation.classList.add("question-explanation");
   const textArea = document.createElement("textarea");
-  textArea.setAttribute("name", `question-explanation-${itemId}`);
+  textArea.setAttribute("name", `question-explanation`);
   textArea.setAttribute("rows", "8");
   textArea.setAttribute(
     "placeHolder",
@@ -136,7 +123,6 @@ const createQuestionContainer = (itemId) => {
       .split(" ")[1]
       .split("-");
     const questionNumber = containerClassName[containerClassName.length - 1];
-    console.log(containerClassName, questionNumber);
     const url = window.location.href.split("/");
     const postUrl = "/sorucozum/" + url[url.length - 1] + "/removeQuestion";
     const response = await axios.post(postUrl, {
@@ -155,9 +141,9 @@ const adjustClassNames = () => {
       idx + 1
     }`;
     const imageSelection = questionContainer.querySelector(".image-selection");
-    imageSelection.setAttribute("name", `question-image-${idx + 1}`);
+    imageSelection.setAttribute("name", `question-image`);
     const textArea = questionContainer.querySelector("textarea");
-    textArea.setAttribute("name", `question-explanation-${idx + 1}`);
+    textArea.setAttribute("name", `question-explanation`);
   });
 };
 

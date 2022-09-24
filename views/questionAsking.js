@@ -36,7 +36,7 @@ module.exports = ({ credits = 0, teacher = null }) => {
           <ion-icon name="add-circle"></ion-icon>
         </div>
       </div>
-      <form enctype="multipart/form-data" class="question-list-container">
+      <form id="form1" method="POST" action="/sorucozum/${teacher._id}/finishOrder" enctype="multipart/form-data" class="question-list-container">
       </form>
     </div>
     <div class="right-body">
@@ -66,7 +66,7 @@ module.exports = ({ credits = 0, teacher = null }) => {
           </div>
         </div>
         <div class="finish-order">
-          <button class="finish-order-button" type="submit">
+          <button form="form1" class="finish-order-button" type="submit">
             Siparişi Tamamla
           </button>
           <ion-icon class="card-icon" name="card"></ion-icon>

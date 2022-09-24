@@ -1,6 +1,6 @@
 const layout = require("./layout");
 
-module.exports = ({ credits = 0, teachers = [] }) => {
+module.exports = ({ credits = 0, teachers = [], askedQuestions = [] }) => {
   teachers = teachers.map((teacher) => {
     let stars;
     if (teacher.stars === null) {
@@ -72,7 +72,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
           <a class="navigation-link" href="">Özel Ders</a>
         </li>
         <li class="navigation">
-          <a href="/sorucozum"class="navigation-link" href="">Soru Çözümü</a>
+          <a href="/sorucozum" class="navigation-link" href="">Soru Çözümü</a>
         </li>
         <li class="navigation">
           <a class="navigation-link" href="/dersler">Profil</a>
@@ -87,15 +87,18 @@ module.exports = ({ credits = 0, teachers = [] }) => {
     <div class="left-part">
       <div class="hero-personal">
         <div class="questions-asked">
-          <div class="questions-asked-text">Sorulan Sorular</div>
-          <div class="questions-asked-arrow">
-            <ion-icon name="caret-back-circle-outline"></ion-icon>
+          <div class="questions-asked-header">
+            <div class="questions-asked-text">Sorulan Sorular</div>
+            <div class="questions-asked-arrow">
+              <ion-icon name="caret-back-circle-outline"></ion-icon>
+            </div>
+          </div>
+          <div class="questions-asked-contents">
+            <ul class="questions-asked-list"></ul>
           </div>
         </div>
       </div>
-      <div class="hero-teachers">
-        ${teachers}
-      </div>
+      <div class="hero-teachers">${teachers}</div>
     </div>
     <div class="right-part">
       <div class="user-credits-container">
@@ -105,6 +108,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
       </div>
     </div>
   </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script
     type="module"
     src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
@@ -112,6 +116,7 @@ module.exports = ({ credits = 0, teachers = [] }) => {
   <script
     nomodule
     src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
-  ></script>`,
+  ></script>
+  <script src="/js/questionSolutionMarket.js"></script>`,
   });
 };

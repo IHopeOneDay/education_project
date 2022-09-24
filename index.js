@@ -1,15 +1,18 @@
 const { MongoClient } = require("mongodb");
+const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 
 const mongoUtils = require("./mongoUtils");
 const { cookieKey } = require("./keys");
-
+const { requireAuth } = require("./routes/middlewares");
 const app = express();
 
 app.use(express.static("public"));
-app.use(express.static("teacher_photographs"));
+app.use(express.static(path.join(__dirname, "teacher_photographs")));
+app.use(express.static(path.join(__dirname, "question_photographs")));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieSession({ keys: [cookieKey] }));
